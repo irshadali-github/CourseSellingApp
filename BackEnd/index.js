@@ -3,6 +3,7 @@ import env from "dotenv";
 import mongoose from "mongoose";
 import courseRouter from "./Routes/course.routes.js";
 import fileUpload from "express-fileupload";
+import { v2 as cloudinary } from 'cloudinary';
 const app = express();
 env.config();
 // console.log(process.env.PORT)
@@ -24,7 +25,7 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
-//Cloudinary Configuration
+//Cloudinary Configuration code
 
 cloudinary.config({
   cloud_name: process.env.cloud_name,
