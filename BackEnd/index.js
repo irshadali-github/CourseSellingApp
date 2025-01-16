@@ -2,6 +2,7 @@ import express from "express";
 import env from "dotenv";
 import mongoose from "mongoose";
 import courseRouter from "./Routes/course.routes.js";
+import userRoute from "./Routes/user.routes.js"
 import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from 'cloudinary';
 const app = express();
@@ -34,6 +35,7 @@ cloudinary.config({
 });
 //Routes
 app.use("/api/v1/course", courseRouter);
+app.use("/api/v1/user", userRoute);
 // app.get('/',(req,res)=>{
 //     res.send("Hello World");
 // })
