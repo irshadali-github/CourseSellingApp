@@ -5,12 +5,26 @@ import courseRouter from "./Routes/course.routes.js";
 import userRoute from "./Routes/user.routes.js"
 import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from 'cloudinary';
+import session from "express-session";
+import passport from "passport";
 const app = express();
 env.config();
 // console.log(process.env.PORT)
 //middleware
 app.use(express.json());
 const port = process.env.PORT || 3000;
+
+// //express-session middleware 
+// app.use(session({
+//   secret:process.env.secret,
+//   resave:false,
+//   saveUninitialized:true
+// }))
+
+// //passport middleware
+// app.use(passport.initialize())
+// app.use(passport.session())
+
 
 //Mongoose Database connection
 try {

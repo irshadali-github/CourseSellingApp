@@ -1,8 +1,6 @@
 import {User} from "../Models/users.model.js"
 import bcrypt from "bcrypt"
-import env from 'dotenv'
 import { z } from 'zod';
-env.config()
 export const signUp= async (req,res)=>{
     try {
         const saltRounds=10;
@@ -37,4 +35,19 @@ export const signUp= async (req,res)=>{
     } catch (error) {
         res.status(500).json({errors:"Error in SignUP"});
     }
+}
+
+export const login= async(req,res)=>{
+    try {
+        const {email,password}= req.body;
+        const user=await User.findOne({email:email});
+        const matchPassword=await bcrypt.compare(password,user.password);
+        if(!user || !matchPassword){
+            return res.status(403).json({errors:"Invalid User Credential"});
+        }
+        res.status(200).json({message:"Login Successfull",user});
+    } catch (error) {
+        res.status(500).json({errors:"Error in Login"});
+    }
+
 }
