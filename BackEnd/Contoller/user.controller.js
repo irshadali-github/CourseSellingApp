@@ -1,6 +1,10 @@
 import {User} from "../Models/users.model.js"
 import bcrypt from "bcrypt"
 import { z } from 'zod';
+import jwt from 'jsonwebtoken'
+import env from 'dotenv'
+env.config()
+
 export const signUp= async (req,res)=>{
     try {
         const saltRounds=10;
@@ -45,9 +49,19 @@ export const login= async(req,res)=>{
         if(!user || !matchPassword){
             return res.status(403).json({errors:"Invalid User Credential"});
         }
-        res.status(200).json({message:"Login Successfull",user});
+
+        //jwt tokken code
+        const token=jwt.sign({
+            id:user._id
+        },process.env.JWT_SECRET_KEY);
+        res.cookie("jwt",token);
+        res.status(200).json({message:"Login Successfull",user,token});
     } catch (error) {
         res.status(500).json({errors:"Error in Login"});
     }
 
+}
+
+export const logout= async(req,res)=>{
+    
 }
